@@ -20,7 +20,10 @@ const Weather = () => {
             settemp(success.data.main.temp)
             setdesc(success.data.weather[0].description)
 
-        })
+        }) .catch((error) => {
+            console.log("Error:", error);
+            alert("City not found or network issue!");
+        });
 
     }
     return (
@@ -29,7 +32,7 @@ const Weather = () => {
 
                 <div className="flex justify-center items-center h-screen">
 
-                    <div class="bg-white/90 backdrop-blur-xl p-8 rounded-2xl shadow-xl 
+                    <div className="bg-white/90 backdrop-blur-xl p-8 rounded-2xl shadow-xl 
             border border-white/30 transition-all duration-300
             hover:bg-gradient-to-br from-sky-500 via-purple-500 to-orange-500 /20 
             hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]
