@@ -10,22 +10,26 @@ const Weather = () => {
 
   const handleChange = (e) => setCity(e.target.value);
 
-  const getWeather = () => {
-    axios(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=64c440e7a3e57e98d56279201b241f14`
-    )
-      .then((res) => {
-        setWeather(res.data.weather[0].main);
-        setDesc(res.data.weather[0].description);
+const getWeather = () => {
+  if (!city.trim()) {
+    setError(true);
+    return;
+  }
 
-        // 🔥 Kelvin → Celsius (rounded)
-        const celsius = Math.round(res.data.main.temp - 273.15);
-        setTemp(celsius);
+  axios(
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=64c440e7a3e57e98d56279201b241f14`
+  )
+    .then((res) => {
+      setWeather(res.data.weather[0].main);
+      setDesc(res.data.weather[0].description);
 
-        setError(false);
-      })
-      .catch(() => setError(true));
-  };
+      const celsius = Math.round(res.data.main.temp - 273.15);
+      setTemp(celsius);
+
+      setError(false);
+    })
+    .catch(() => setError(true));
+};
 
   /* WEATHER → EMOJI */
   const weatherEmoji = () => {
